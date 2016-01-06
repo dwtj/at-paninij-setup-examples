@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+    
+  <groupId>org.paninij</groupId>
+  <version>0.1.0-SNAPSHOT</version>
+  <artifactId>at-paninij-maven-example</artifactId>
+  <name>@PaniniJ Maven Example</name>
+  <packaging>jar</packaging>
+
+  <properties>
+    <panini.gen.src.dir>${project.build.directory}/generated-sources/panini</panini.gen.src.dir>
+  </properties>
+
+  <build>
+    <plugins>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.3</version>
+        <configuration>
+          <!-- Specify Java version. -->
+          <source>1.8</source>
+          <target>1.8</target>
+          <!-- Specify where the panini-generated source artifacts are put. -->
+          <generatedSourcesDirectory>${panini.gen.src.dir}</generatedSourcesDirectory>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>1.9.1</version>
+        <executions>
+          <!-- Add the generated src dir so that Eclipse will automatically find it. -->
+          <execution>
+            <id>add-source</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>add-source</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>${panini.gen.src.dir}</source>
+              </sources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.4.0</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>java</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <mainClass>helloworld.HelloWorldTemplate</mainClass>
+        </configuration>
+      </plugin>
+
+    </plugins>
+  </build>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.paninij</groupId>
+      <artifactId>at-paninij-proc</artifactId>
+      <version>0.1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.paninij</groupId>
+      <artifactId>at-paninij-runtime</artifactId>
+      <version>0.1.0</version>
+      <scope>runtime</scope>
+    </dependency>
+  </dependencies>
+</project>
